@@ -1,0 +1,17 @@
+{
+  "name": "@avilaops/monitor-notas-core",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Núcleo interno do Monitor completo de Notas, clonado do Lojas",
+  "exports": {".": {"types": "./dist/index.d.ts", "import": "./dist/index.js"}},
+  "files": ["dist", "proveniencia.json", "README.md"],
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "test": "tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {"fast-xml-parser": "5.11.2", "node-forge": "1.4.0", "zod": "3.23.8"},
+  "devDependencies": {"@types/node": "^22", "@types/node-forge": "^1.3.14", "tsx": "^4", "typescript": "^5"}
+}

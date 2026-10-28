@@ -1,0 +1,12 @@
+{
+  "name": "monitor-notas",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "test": "npm test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "pack:core": "npm pack --workspace @avilaops/monitor-notas-core --pack-destination artifacts"
+  }
+}
