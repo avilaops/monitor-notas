@@ -1,4 +1,8 @@
+import { XMLParser, XMLValidator } from "fast-xml-parser";
+
 const LIMITE_ARQUIVO_FISCAL = 12 * 1024 * 1024;
+const parser = new XMLParser({ ignoreAttributes: false, removeNSPrefix: true, parseTagValue: false, processEntities: false });
+const objeto = (valor: unknown): valor is Record<string, unknown> => !!valor && typeof valor === "object" && !Array.isArray(valor);
 
 export type FormatoArquivoFiscal = "xml" | "pdf";
 
@@ -12,11 +16,15 @@ export function xmlNfeCompletoValido(conteudo: string | Uint8Array): boolean {
   const bytes = typeof conteudo === "string" ? new TextEncoder().encode(conteudo) : conteudo;
   if (!bytes.byteLength || bytes.byteLength > LIMITE_ARQUIVO_FISCAL) return false;
   const xml = texto(conteudo);
-  return !/<!DOCTYPE|<!ENTITY/i.test(xml)
-    && /<(?:(?:\w+):)?nfeProc\b/i.test(xml)
-    && /<(?:(?:\w+):)?NFe\b/i.test(xml)
-    && /<(?:(?:\w+):)?infNFe\b/i.test(xml)
-    && /<(?:(?:\w+):)?protNFe\b[\s\S]*?<(?:(?:\w+):)?infProt\b[\s\S]*?<(?:(?:\w+):)?cStat\b[^>]*>\s*100\s*</i.test(xml);
+  if (/<!DOCTYPE|<!ENTITY/i.test(xml) || XMLValidator.validate(xml) !== true) return false;
+  try {
+    const raiz: unknown = parser.parse(xml);
+    if (!objeto(raiz) || Object.keys(raiz).filter(chave => !chave.startsWith("?")).length !== 1) return false;
+    const processo = raiz.nfeProc;
+    if (!objeto(processo) || !objeto(processo.NFe) || !objeto(processo.NFe.infNFe)
+      || !objeto(processo.protNFe) || !objeto(processo.protNFe.infProt)) return false;
+    return processo.protNFe.infProt.cStat === "100";
+  } catch { return false; }
 }
 
 export function pdfFiscalValido(conteudo: Uint8Array): boolean {

@@ -66,6 +66,28 @@ test("CNPJ não configurado não dispara requisição para ERP ou TMS", async ()
   assert.equal(await buscarFiscalErp("outra-empresa", semRede, {}), null);
 });
 
+test("mapas de credenciais malformados são tratados como não configurados", async () => {
+  const semRede = (async () => { assert.fail("acesso externo indevido"); }) as typeof fetch;
+  for (const mapa of ["null", "[]", "1", "{invalido"]) {
+    assert.equal(await buscarFiscalTms(cnpj, semRede, { ...env, TMS_FISCAL_BY_CNPJ: mapa }), null);
+    assert.equal(await buscarFiscalErp(cnpj, semRede, { NODE_ENV: "production", ERP_API_URL: "https://erp.example", ERP_API_KEYS_BY_CNPJ: mapa }), null);
+  }
+});
+
+test("TMS recusa evento remoto sem identificação e acervo com origem errada", async () => {
+  for (const body of [
+    { ...pagina(1), fonte_canonica: "OUTRO" },
+    { ...pagina(1), documentos: [{ ...documento("1"), eventos: [{}] }] },
+  ]) {
+    await assert.rejects(buscarFiscalTms(cnpj, (async () => Response.json(body)) as typeof fetch, env), /inválida/);
+  }
+});
+
+test("TMS aceita acervo vazio quando total e paginação concordam", async () => {
+  const resultado = await buscarFiscalTms(cnpj, (async () => Response.json({ ...pagina(1), paginas: 1, total: 0, documentos: [] })) as typeof fetch, env);
+  assert.deepEqual(resultado?.documentos, []);
+});
+
 test("metadados numéricos ausentes permanecem nulos", () => {
   const resumo = resumirDocumentoFiscal("<resNFe><xNome>Fornecedor</xNome></resNFe>", "resNFe.xsd", null);
   assert.equal(resumo.valorCentavos, null);

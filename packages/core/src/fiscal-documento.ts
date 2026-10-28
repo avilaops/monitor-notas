@@ -27,8 +27,11 @@ const parser = new XMLParser({ ignoreAttributes: false, removeNSPrefix: true, pa
 const texto = (valor: unknown) => typeof valor === "string" ? valor.trim() : valor == null ? "" : String(valor).trim();
 
 function centavos(valor: unknown): number | null {
-  const numero = Number(texto(valor).replace(",", "."));
-  return Number.isFinite(numero) ? Math.round(numero * 100) : null;
+  const conteudo = texto(valor).replace(",", ".");
+  if (!/^\d+(?:\.\d{1,2})?$/.test(conteudo)) return null;
+  const [inteira, fracao = ""] = conteudo.split(".");
+  const resultado = Number(inteira) * 100 + Number(fracao.padEnd(2, "0"));
+  return Number.isSafeInteger(resultado) ? resultado : null;
 }
 
 function numeroPelaChave(chave: string | null): string | null {
@@ -44,8 +47,10 @@ function primeiro(...valores: unknown[]): string | null {
 }
 
 function inteiro(valor: unknown): number | null {
-  const numero = Number(texto(valor));
-  return Number.isInteger(numero) && numero >= 0 ? numero : null;
+  const conteudo = texto(valor);
+  if (!/^\d+$/.test(conteudo)) return null;
+  const numero = Number(conteudo);
+  return Number.isSafeInteger(numero) ? numero : null;
 }
 
 function quantidadeItens(valor: unknown): number | null {

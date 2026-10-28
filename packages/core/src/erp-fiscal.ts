@@ -1,3 +1,5 @@
+import { lerJsonFiscal } from "./fiscal-json.js";
+
 type Ambiente = Record<string, string | undefined>;
 
 export type NotaRecebidaErp = {
@@ -20,13 +22,17 @@ function configuracao(cnpj: string, env: Ambiente): { api: string; painel: strin
   const painel = env.ERP_APP_URL?.replace(/\/$/, "") || api;
   if (!/^https:\/\//.test(api) && env.NODE_ENV === "production") return null;
   let keys: Record<string, unknown>;
-  try { keys = JSON.parse(env.ERP_API_KEYS_BY_CNPJ ?? "{}") as Record<string, unknown>; } catch { return null; }
-  const key = keys[cnpj];
+  try {
+    const lido: unknown = JSON.parse(env.ERP_API_KEYS_BY_CNPJ ?? "{}");
+    if (!lido || typeof lido !== "object" || Array.isArray(lido)) return null;
+    keys = lido as Record<string, unknown>;
+  } catch { return null; }
+  const key = keys[cnpj.replace(/[^0-9A-Z]/gi, "").toUpperCase()];
   return api && typeof key === "string" && key.trim() ? { api, painel, key: key.trim() } : null;
 }
 
 export function fiscalErpConfigurado(cnpj: string, env: Ambiente = process.env): boolean {
-  return configuracao(cnpj.replace(/\D/g, ""), env) !== null;
+  return configuracao(cnpj, env) !== null;
 }
 
 function notaValida(nota: unknown): nota is NotaRecebidaErp {
@@ -59,15 +65,17 @@ function pendenciaValida(pendencia: unknown): pendencia is PendenciaNfeErp {
 export async function buscarFiscalErp(cnpj: string, fetcher: typeof fetch = fetch, env: Ambiente = process.env): Promise<FiscalErp | null> {
   const config = configuracao(cnpj, env);
   if (!config) return null;
-  const response = await fetcher(`${config.api}/api/v1/notas-recebidas`, { headers: { Authorization: `Bearer ${config.key}` }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
+  const response = await fetcher(`${config.api}/api/v1/notas-recebidas`, { headers: { Authorization: `Bearer ${config.key}` }, cache: "no-store", redirect: "error", signal: AbortSignal.timeout(10_000) });
   if (!response.ok) throw new Error(`ERP respondeu ${response.status} ao consultar NF-e recebidas.`);
-  const body = await response.json() as { notas?: unknown; pendencias?: unknown };
+  const lido = await lerJsonFiscal(response);
+  if (!lido || typeof lido !== "object" || Array.isArray(lido)) throw new Error("ERP devolveu uma lista fiscal inválida.");
+  const body = lido as { notas?: unknown; pendencias?: unknown };
   if (!Array.isArray(body.notas) || !body.notas.every(notaValida) || !Array.isArray(body.pendencias) || !body.pendencias.every(pendenciaValida)) throw new Error("ERP devolveu uma lista fiscal inválida.");
   return { notas: body.notas, pendencias: body.pendencias, painelUrl: `${config.painel}/fiscal?ver=recebidas` };
 }
 
 export async function baixarFiscalErp(cnpj: string, id: string, formato: "xml" | "danfe", fetcher: typeof fetch = fetch, env: Ambiente = process.env): Promise<Response | null> {
   const config = configuracao(cnpj, env);
-  if (!config || !/^[1-9]\d{0,18}$/.test(id)) return null;
-  return fetcher(`${config.api}/api/v1/notas-recebidas/${id}/${formato}`, { headers: { Authorization: `Bearer ${config.key}` }, cache: "no-store", signal: AbortSignal.timeout(15_000) });
+  if (!config || !/^[1-9]\d{0,18}$/.test(id) || !["xml", "danfe"].includes(formato)) return null;
+  return fetcher(`${config.api}/api/v1/notas-recebidas/${id}/${formato}`, { headers: { Authorization: `Bearer ${config.key}` }, cache: "no-store", redirect: "error", signal: AbortSignal.timeout(15_000) });
 }

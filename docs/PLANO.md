@@ -7,11 +7,11 @@ na origem. Builds e testes exclusivamente no GitHub CI. Escopo AVL-326.
 
 ## Módulo 1 — Núcleo fiscal e adaptadores
 
-- [ ] Copiar interpretação, classificação, conteúdo, distribuição e certificados
+- [x] Copiar interpretação, classificação, conteúdo, distribuição e certificados
   do commit de origem, com manifesto de proveniência e hashes.
-- [ ] Preservar os testes de origem e acrescentar contratos independentes.
-- [ ] Adaptar a paginação CT-e completa, recusando respostas inconsistentes.
-- [ ] Evitar perda de eventos na deduplicação e valores ausentes como zero.
+- [x] Preservar os testes de origem e acrescentar contratos independentes.
+- [x] Adaptar a paginação CT-e completa, recusando respostas inconsistentes.
+- [x] Evitar perda de eventos na deduplicação e valores ausentes como zero.
 - [ ] CI: testes sintéticos, typecheck, compilação e artefato consumível.
 
 Arquivos: `packages/core/src/*.ts`, `packages/core/tests/*.test.ts`,
@@ -44,3 +44,8 @@ interface de rede injetável, sem dependência da sessão ou Prisma do Lojas.
 - Decisão: não portar o comércio do Lojas para viabilizar o monitor; adaptar as
   fronteiras de sessão, banco e transporte no repositório independente.
 - Testes novos serão enviados à CI antes das correções; nenhum teste/build local.
+- CI 40642137626 bloqueada antes de qualquer step por pagamento/limite de gastos.
+  O run não demonstra teste vermelho nem falha no código. Implementação do módulo
+  1 e revisão estática avançadas; módulo não concluído sem testes/typecheck/build.
+- Revisão independente: corrigidos reconhecimento de XML apenas por regex e
+  leitura sem limite das listagens remotas. Testes sintéticos adicionados.

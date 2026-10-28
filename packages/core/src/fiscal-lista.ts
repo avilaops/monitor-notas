@@ -9,6 +9,8 @@ export type DocumentoDaListaFiscal = {
 };
 
 function identidadeFiscal(documento: DocumentoDaListaFiscal) {
+  // Eventos da mesma nota são registros próprios; nunca os reduzir à chave da nota.
+  if (documento.tipo === "EVENTO" || documento.situacao === "EVENTO") return `evento:${documento.id}`;
   if (documento.chave) return `chave:${documento.chave}`;
   if (documento.nsu) return `nsu:${documento.tipo}:${documento.nsu}`;
   return `id:${documento.id}`;

@@ -16,7 +16,8 @@
       "destino": "src/fiscal-documento.ts",
       "sha256Origem": "65646a5e303ff9b2b5091ac0ac7a4bd430a96a603daea1ac6af904795a3149ae",
       "adaptacoes": [
-        "Imports ESM .js"
+        "Imports ESM .js",
+        "Valores numéricos ausentes nulos; centavos inteiros seguros"
       ]
     },
     {
@@ -24,7 +25,8 @@
       "destino": "src/fiscal-lista.ts",
       "sha256Origem": "d54827a47213cfa996e823a347ef481551c8504a24673493a9c7587a91bb1642",
       "adaptacoes": [
-        "Imports ESM .js"
+        "Imports ESM .js",
+        "Eventos distintos preservados por identidade própria"
       ]
     },
     {
@@ -32,7 +34,8 @@
       "destino": "src/fiscal-conteudo.ts",
       "sha256Origem": "62d3eaa00aed1fb49342addaec1a9b7248a2bf04f61c672fc60e5d4d6bd3d6d8",
       "adaptacoes": [
-        "Imports ESM .js"
+        "Imports ESM .js",
+        "Validação de XML bem formado e estrutura nfeProc em vez de regex"
       ]
     },
     {
@@ -65,7 +68,9 @@
       "destino": "src/erp-fiscal.ts",
       "sha256Origem": "ea1f9323e61203282da8bf8d5ae1d8ffed01d51818b6c33307503069df4abc34",
       "adaptacoes": [
-        "Imports ESM .js"
+        "Imports ESM .js",
+        "Normalização CNPJ e configuração malformada",
+        "Bloqueio de redirects e limite JSON"
       ]
     },
     {
@@ -73,7 +78,11 @@
       "destino": "src/tms-fiscal.ts",
       "sha256Origem": "2b8a65da8543055d241d8be86fdec471ee6a8d199bb6079e044f19b572a17cff",
       "adaptacoes": [
-        "Imports ESM .js"
+        "Imports ESM .js",
+        "Paginação completa com totais estáveis e IDs sem repetição",
+        "Validação de eventos/campos e falhas sem resposta parcial",
+        "Normalização CNPJ e configuração malformada",
+        "Bloqueio de redirects e limite JSON por página"
       ]
     },
     {

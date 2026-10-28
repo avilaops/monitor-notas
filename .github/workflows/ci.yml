@@ -19,6 +19,8 @@ jobs:
       - run: npm test
       - run: npm run typecheck
       - run: npm run build
+      - name: Verificar importação do artefato compilado
+        run: node --input-type=module -e 'await import("./packages/core/dist/index.js"); await import("./packages/core/dist/browser.js")'
       - run: mkdir -p artifacts && npm run pack:core
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
