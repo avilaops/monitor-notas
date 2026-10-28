@@ -1,0 +1,145 @@
+{
+  "repositorio": "https://github.com/avilaops/lojas.avilaops.com",
+  "commit": "07ee3d01108222b34aa999083c5daee29897a843",
+  "estrategia": "copia-sem-remocao",
+  "arquivos": [
+    {
+      "origem": "src/lib/fiscal-monitor.ts",
+      "destino": "src/fiscal-monitor.ts",
+      "sha256Origem": "a3d4f288acd636672b2814ddb23cbe5fe584ed48aac41cac2aeca8e203bf76e2",
+      "adaptacoes": [
+        "Imports ESM .js"
+      ]
+    },
+    {
+      "origem": "src/lib/fiscal-documento.ts",
+      "destino": "src/fiscal-documento.ts",
+      "sha256Origem": "65646a5e303ff9b2b5091ac0ac7a4bd430a96a603daea1ac6af904795a3149ae",
+      "adaptacoes": [
+        "Imports ESM .js"
+      ]
+    },
+    {
+      "origem": "src/lib/fiscal-lista.ts",
+      "destino": "src/fiscal-lista.ts",
+      "sha256Origem": "d54827a47213cfa996e823a347ef481551c8504a24673493a9c7587a91bb1642",
+      "adaptacoes": [
+        "Imports ESM .js"
+      ]
+    },
+    {
+      "origem": "src/lib/fiscal-conteudo.ts",
+      "destino": "src/fiscal-conteudo.ts",
+      "sha256Origem": "62d3eaa00aed1fb49342addaec1a9b7248a2bf04f61c672fc60e5d4d6bd3d6d8",
+      "adaptacoes": [
+        "Imports ESM .js"
+      ]
+    },
+    {
+      "origem": "src/lib/fiscal-fluxos-contrato.ts",
+      "destino": "src/fiscal-fluxos-contrato.ts",
+      "sha256Origem": "1d06b3b31afc41667b78fde3acc7f92dee8d2e134b6da9c1fd43022ffcd69cc9",
+      "adaptacoes": [
+        "Imports ESM .js"
+      ]
+    },
+    {
+      "origem": "src/lib/fiscal-certificado.ts",
+      "destino": "src/fiscal-certificado.ts",
+      "sha256Origem": "c453f8b20a67a20107dda0efa0b606965b467bc228f11f31ea1ea9673b057ce1",
+      "adaptacoes": [
+        "Imports ESM .js",
+        "Nome de cofre MONITOR_CERT_SECRET"
+      ]
+    },
+    {
+      "origem": "src/lib/fiscal-distribuicao.ts",
+      "destino": "src/fiscal-distribuicao.ts",
+      "sha256Origem": "2f30eec6efdfbdcdd88699b290e868cb08db5e6a578dedf39264edf576a66703",
+      "adaptacoes": [
+        "Imports ESM .js"
+      ]
+    },
+    {
+      "origem": "src/lib/erp-fiscal.ts",
+      "destino": "src/erp-fiscal.ts",
+      "sha256Origem": "ea1f9323e61203282da8bf8d5ae1d8ffed01d51818b6c33307503069df4abc34",
+      "adaptacoes": [
+        "Imports ESM .js"
+      ]
+    },
+    {
+      "origem": "src/lib/tms-fiscal.ts",
+      "destino": "src/tms-fiscal.ts",
+      "sha256Origem": "2b8a65da8543055d241d8be86fdec471ee6a8d199bb6079e044f19b572a17cff",
+      "adaptacoes": [
+        "Imports ESM .js"
+      ]
+    },
+    {
+      "origem": "src/lib/fiscal-monitor.test.ts",
+      "destino": "tests/fiscal-monitor.test.ts",
+      "sha256Origem": "b71425f1b73957f3242ef5ee0333971ca5db26e66cc505ac316db51b269b6594",
+      "adaptacoes": [
+        "Imports ESM .js",
+        "Imports do diretório src"
+      ]
+    },
+    {
+      "origem": "src/lib/fiscal-documento.test.ts",
+      "destino": "tests/fiscal-documento.test.ts",
+      "sha256Origem": "690d4cdfafb680cea501a84988145b70f99be50cc72f346818c1b77ba1175e98",
+      "adaptacoes": [
+        "Imports ESM .js",
+        "Imports do diretório src"
+      ]
+    },
+    {
+      "origem": "src/lib/fiscal-lista.test.ts",
+      "destino": "tests/fiscal-lista.test.ts",
+      "sha256Origem": "ed3a5b59d4e404bf9240be0e933fc2971ec0073c8708626b261715d835a1ecfc",
+      "adaptacoes": [
+        "Imports ESM .js",
+        "Imports do diretório src"
+      ]
+    },
+    {
+      "origem": "src/lib/fiscal-certificado.test.ts",
+      "destino": "tests/fiscal-certificado.test.ts",
+      "sha256Origem": "2f81538af80f41806e1e0b9de8bf4c0c7a4ab6ee695eda918392af2e8db043db",
+      "adaptacoes": [
+        "Imports ESM .js",
+        "Imports do diretório src",
+        "Nome de cofre MONITOR_CERT_SECRET"
+      ]
+    },
+    {
+      "origem": "src/lib/fiscal-distribuicao.test.ts",
+      "destino": "tests/fiscal-distribuicao.test.ts",
+      "sha256Origem": "adf2fce90035e9fbfeb590328e57996da980f40ac5482cd251ed5d1195ae3cfd",
+      "adaptacoes": [
+        "Imports ESM .js",
+        "Imports do diretório src"
+      ]
+    },
+    {
+      "origem": "src/lib/erp-fiscal.test.ts",
+      "destino": "tests/erp-fiscal.test.ts",
+      "sha256Origem": "f70a7863fd4c6897705425ab794551ce13b828345aefdc8b83c81c6b25084232",
+      "adaptacoes": [
+        "Imports ESM .js",
+        "Imports do diretório src"
+      ]
+    },
+    {
+      "origem": "src/lib/tms-fiscal.test.ts",
+      "destino": "tests/tms-fiscal.test.ts",
+      "sha256Origem": "67ab04890591667666de7fb0329716b6783cb412ddc540425de8b1ff26851bea",
+      "adaptacoes": [
+        "Imports ESM .js",
+        "Imports do diretório src",
+        "Fixture com metadados de paginação do contrato TMS"
+      ]
+    }
+  ]
+}
