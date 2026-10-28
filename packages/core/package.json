@@ -4,7 +4,10 @@
   "type": "module",
   "private": true,
   "description": "Núcleo interno do Monitor completo de Notas, clonado do Lojas",
-  "exports": {".": {"types": "./dist/index.d.ts", "import": "./dist/index.js"}},
+  "exports": {
+    ".": {"types": "./dist/index.d.ts", "import": "./dist/index.js"},
+    "./browser": {"types": "./dist/browser.d.ts", "import": "./dist/browser.js"}
+  },
   "files": ["dist", "proveniencia.json", "README.md"],
   "engines": {"node": ">=22"},
   "scripts": {
